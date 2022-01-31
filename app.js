@@ -90,6 +90,7 @@ window.addEventListener("DOMContentLoaded", function () {
   displayMenuButtons()
 })
 
+//creating map from the pushed array (menuItems) and running a function that returns a string html, an element for the new array
 function displayMenuItems(menuItems) {
   let displayMenu = menuItems.map(function (item) {
     return `<article class="menu-item">
@@ -103,23 +104,26 @@ function displayMenuItems(menuItems) {
         </div >
       </article > `
   })
-
+  //joining all the strings and use it as the html content for section center
   displayMenu = displayMenu.join('')
   sectionCenter.innerHTML = displayMenu;
 }
 
 function displayMenuButtons() {
+  //reduce gives us a new array. Here we need all of the unique category values
   const categories = menu.reduce(function (values, item) {
     if (!values.includes(item.category)) {
       values.push(item.category);
     }
     return values;
-  }, ["all"])
+  }, ["all"]) //we need array as output and all must be there
+
   const categoryBtns = categories.map(function (category) {
     return `<button class="filter-btn" data-id=${category} type="button">${category}</button>`
   }).join("");
-  container.innerHTML = categoryBtns;
-  const filterBtns = document.querySelectorAll(".filter-btn")
+  container.innerHTML = categoryBtns; //adding dynamic buttons from the categories array
+
+  const filterBtns = document.querySelectorAll(".filter-btn") //buttons added now the classes are available
   //filter items
   filterBtns.forEach(function (btn) {
     btn.addEventListener("click", function (e) {
